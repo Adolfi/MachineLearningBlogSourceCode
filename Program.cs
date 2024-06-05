@@ -4,7 +4,9 @@ using System;
 using System.IO;
 
 var context = new MLContext();
-	
+
+#region Train the model
+
 // 1. Load data from .csv.
 var dataPath = Path.Combine(Environment.CurrentDirectory, "housing.csv");
 var dataView = context.Data
@@ -23,6 +25,9 @@ var model = pipeline.Fit(dataView);
 context.Model.Save(model, dataView.Schema, 
     Path.Combine(Directory.GetCurrentDirectory(), "housing.zip"));
 
+#endregion
+
+#region Use the model
 
 // 1. Load the model
 var loadedModel = context.Model
@@ -39,3 +44,5 @@ var prediction = predictionEngine
 
 // 4. Output result
 Console.WriteLine($"Predicted price: {prediction.Price:C}");
+
+#endregion
